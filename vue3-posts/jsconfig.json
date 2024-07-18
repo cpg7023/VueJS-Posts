@@ -6,6 +6,10 @@
 //   },
 //   "exclude": ["node_modules", "dist"]
 // }
+
+// VS Code에서 제공하는 기능파일
+// 디렉토리에 이파일이 있을 때 해당 디렉토리가 Root임을 나타내며
+// 자바스크립트 언어에 대한 다양한 옵션을 지원한다.
 {
   "compilerOptions": {
     "baseUrl": ".",
