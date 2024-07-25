@@ -14,6 +14,7 @@
 					:content="item.content"
 					:created-at="item.createdAt"
 					@click="goPage(item.id)"
+					@modal="openModal(item)"
 				></PostItem>
 			</template>
 		</AppGrid>
@@ -22,6 +23,13 @@
 			:current-page="params._page"
 			:page-count="pageCount"
 			@page="page => (params._page = page)"
+		/>
+		<!--모달을 띄우기 위해 포스트 리스트 템플릿에 포함-->
+		<PostModal
+			v-model="show"
+			:title="modalTitle"
+			:content="modalContent"
+			:created-at="modalCreatedAt"
 		/>
 
 		<template v-if="posts && posts.length > 0">
@@ -43,6 +51,7 @@ import AppCard from '@/components/AppCard.vue';
 import AppPagenation from '@/components/AppPagenation.vue';
 import AppGrid from '@/components/AppGrid.vue';
 import PostFilter from '@/components/posts/PostFilter.vue';
+import PostModal from '@/components/posts/PostModal.vue';
 
 const posts = ref([]);
 const router = useRouter();
@@ -95,6 +104,20 @@ const goPage = id => {
 		// },
 		// hash: 'Worlds!',
 	});
+};
+
+// modal
+const show = ref(false);
+const modalTitle = ref('');
+const modalContent = ref('');
+const modalCreatedAt = ref('');
+
+// 위에서 openModal 이벤트 emit에서 item을 파람으로 받은 것을 구조 분해 할당
+const openModal = ({ title, content, createdAt }) => {
+	show.value = true;
+	modalTitle.value = title;
+	modalContent.value = content;
+	modalCreatedAt.value = createdAt;
 };
 </script>
 
