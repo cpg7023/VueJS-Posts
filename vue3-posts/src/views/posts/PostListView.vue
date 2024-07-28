@@ -25,12 +25,14 @@
 			@page="page => (params._page = page)"
 		/>
 		<!--모달을 띄우기 위해 포스트 리스트 템플릿에 포함-->
-		<PostModal
-			v-model="show"
-			:title="modalTitle"
-			:content="modalContent"
-			:created-at="modalCreatedAt"
-		/>
+		<Teleport to="#modal">
+			<PostModal
+				v-model="show"
+				:title="modalTitle"
+				:content="modalContent"
+				:created-at="modalCreatedAt"
+			/>
+		</Teleport>
 
 		<template v-if="posts && posts.length > 0">
 			<hr class="my-5" />
