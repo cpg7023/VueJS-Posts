@@ -3,6 +3,8 @@
 		<div class="mb-3">
 			<label for="title" class="form-label">제목</label>
 			<input
+				v-focus
+				v-color="'blue'"
 				:value="title"
 				@input="$emit('update:title', $event.target.value)"
 				type="text"
@@ -29,6 +31,13 @@
 </template>
 
 <script setup>
+// v 프리픽스를 붙여서 커스텀 디렉티브를 선언하고 mounted 훅을 사용하여 el을 매개변수로 받는다
+// 해당 엘리먼트를 포커스 시킨다
+// const vFocus = {
+// 	mounted: el => {
+// 		el.focus();
+// 	},
+// };
 defineProps({
 	title: String,
 	content: String,

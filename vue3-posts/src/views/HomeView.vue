@@ -26,10 +26,8 @@ export default {
 </script>
 
 <script setup>
-import { ref, inject } from 'vue';
+import { ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-import AppCard from '@/components/AppCard.vue';
-import AppGrid from '@/components/AppGrid.vue';
 
 const route = useRoute();
 const router = useRouter();
@@ -41,8 +39,8 @@ const goAboutPage = () => {
 
 const items = ref(['사과', '딸기', '포도', '바나나']);
 
-const person = inject('person');
-console.log('person.name : ', person.name);
+// const person = inject('person');
+// console.log('person.name : ', person.name);
 </script>
 
 <style lang="scss" scoped></style>

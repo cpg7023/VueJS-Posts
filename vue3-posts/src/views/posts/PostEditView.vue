@@ -19,7 +19,6 @@
 			</template>
 		</PostForm>
 		<!-- <AppAlert :show="showAlert" :message="alertMessage" :type="alertType" /> -->
-		<AppAlert :items="alerts" />
 	</div>
 </template>
 
@@ -28,7 +27,10 @@ import { ref } from 'vue';
 import { useRouter, useRoute } from 'vue-router';
 import { getPostById, updatePost } from '@/api/posts';
 import PostForm from '@/components/posts/PostForm.vue';
-import AppAlert from '@/components/AppAlert.vue';
+import { useAlert } from '@/composables/alerts';
+
+// 컴포저블 함수에서 사용할 속성들 가져오기
+const { vAlert, vSuccess } = useAlert();
 
 const route = useRoute();
 const router = useRouter();
@@ -60,8 +62,8 @@ fetchPost();
 const edit = async () => {
 	try {
 		await updatePost(id, { ...form.value });
-		// router.push({ name: 'PostDetail', params: { id } });
-		vAlert('수정이 완료되었습니다.', 'success');
+		router.push({ name: 'PostDetail', params: { id } });
+		vSuccess('수정이 완료되었습니다.');
 	} catch (error) {
 		console.error(error);
 		vAlert(error.message);
@@ -74,18 +76,6 @@ const goDetailPage = () => router.push({ name: 'PostDetail', params: { id } });
 // const showAlert = ref(false);
 // const alertMessage = ref('');
 // const alertType = ref('');
-const alerts = ref([]);
-
-const vAlert = (message, type = 'error') => {
-	alerts.value.push({ message, type });
-	// alertMessage.value = message;
-	// showAlert.value = true;
-	// alertType.value = type;
-	setTimeout(() => {
-		// showAlert.value = false;
-		alerts.value.shift(); // 맨앞 항목부터 dequeue
-	}, 2000);
-};
 </script>
 
 <style lang="scss" scoped></style>
