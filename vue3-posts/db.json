@@ -13,12 +13,6 @@
       "createdAt": 1721917303547
     },
     {
-      "title": "제목10",
-      "content": "내용10",
-      "createdAt": 1722264839283,
-      "id": 9
-    },
-    {
       "title": "fdfdffff",
       "content": "fsssgsdg",
       "createdAt": 1721372409609,
@@ -59,6 +53,12 @@
       "content": "게시글 225",
       "createdAt": 1722264877251,
       "id": 16
+    },
+    {
+      "title": "181818818",
+      "content": "1818181818181818181818",
+      "createdAt": 1722350291368,
+      "id": 17
     }
   ]
 }
