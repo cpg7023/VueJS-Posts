@@ -8,31 +8,51 @@ const defaultConfig = {
 	method: 'get',
 };
 
-export const useAxios = (url, config = {}) => {
+const defaultOptions = {
+	immediate: true,
+};
+
+export const useAxios = (url, config = {}, options = {}) => {
 	// Error 와 Loading UI용 반응형 상태
 	const response = ref(null);
 	const error = ref(null);
 	const loading = ref(false);
 	const data = ref(null);
 
+	const { onSuccess, onError, immediate } = {
+		//디폴트로 immediate가 true 였다가 options로 false가 넘어오면 immediate가 false가 된다
+		...defaultOptions,
+		...options,
+	};
+
 	const { params } = config;
-	const execute = () => {
+
+	const execute = body => {
 		data.value = null;
 		error.value = null;
 		loading.value = true;
+
 		axios(url, {
 			...defaultConfig,
 			...config,
 			// ref 객체이기 때문에 params 객체의 반응형 매핑을 풀어야 페이지네이션 동작
 			params: unref(params),
+			// watchEffect는 첫번째인자로 콜백함수가 넘어온다 그래서 body가 object일때만 data에 넣어주고 아니면 빈값을 넣는다
+			data: typeof body === 'object' ? body : {},
 		})
 			.then(res => {
 				// url로 요청 성공시 값 저장
 				response.value = res;
 				data.value = res.data;
+				if (onSuccess) {
+					onSuccess(res);
+				}
 			})
 			.catch(err => {
 				error.value = err;
+				if (onError) {
+					onError(err);
+				}
 			})
 			.finally(() => {
 				loading.value = false;
@@ -44,7 +64,9 @@ export const useAxios = (url, config = {}) => {
 	if (isRef(params)) {
 		watchEffect(execute);
 	} else {
-		execute();
+		if (immediate) {
+			execute();
+		}
 	}
 
 	return {
@@ -52,5 +74,7 @@ export const useAxios = (url, config = {}) => {
 		data,
 		error,
 		loading,
+		//excute 호출을 외부에서 원할때 하도록 리턴
+		execute,
 	};
 };

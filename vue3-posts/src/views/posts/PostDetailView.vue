@@ -55,7 +55,7 @@ import { useAlert } from '@/composables/alerts';
 import { useAxios } from '@/hooks/useAxios';
 
 // 컴포저블 함수에서 사용할 속성들 가져오기
-const { vAlert } = useAlert();
+const { vAlert, vSuccess } = useAlert();
 
 const props = defineProps({
 	id: [Number, String],
@@ -84,9 +84,29 @@ const router = useRouter();
 // });
 // Error 와 Loading UI용 반응형 상태
 
-const removeError = ref(null);
-const removeLoading = ref(false);
+// const removeError = ref(null);
+// const removeLoading = ref(false);
+// 조회용
 const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
+// 삭제용
+const {
+	error: removeError,
+	loading: removeLoading,
+	execute,
+} = useAxios(
+	`/posts/${props.id}`,
+	{ method: 'delete' },
+	{
+		immediate: false,
+		onSuccess: () => {
+			vSuccess('삭제가 완료되었습니다.');
+			router.push({ name: 'PostList' });
+		},
+		onError: err => {
+			vAlert(err.message);
+		},
+	},
+);
 
 // 데이터 상세 조회 API 콜
 // const fetchPost = async () => {
@@ -111,18 +131,27 @@ const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
 
 // 데이터 상세 삭제 API 콜
 const remove = async () => {
-	try {
-		removeLoading.value = true;
-		if (confirm('삭제하시겠습니까?')) {
-			await deletePost(props.id);
-			router.push({ name: 'PostList' });
-		}
-	} catch (err) {
-		removeError.value = err;
-	} finally {
-		removeLoading.value = false;
+	if (confirm('삭제하시겠습니까?') === false) {
+		return;
 	}
+	execute();
 };
+
+// const remove = async () => {
+// 	try {
+// 		removeLoading.value = true;
+// 		if (confirm('삭제하시겠습니까?') === false) {
+// 			return;
+// 		}
+// 		execute();
+// 		await deletePost(props.id);
+// 		router.push({ name: 'PostList' });
+// 	} catch (err) {
+// 		removeError.value = err;
+// 	} finally {
+// 		removeLoading.value = false;
+// 	}
+// };
 
 const goListPage = () => router.push({ name: 'PostList' });
 const goEditPage = () => {

@@ -19,12 +19,6 @@
       "id": 10
     },
     {
-      "title": "제목 ８",
-      "content": "내뇬 ８",
-      "createdAt": 1721613195337,
-      "id": 11
-    },
-    {
       "title": "ㅇㄹㅇㄹㅇㄹㅇㄹㅇ",
       "content": "ㅇㄶㅅㅇ",
       "createdAt": 1721613891515,
@@ -59,6 +53,18 @@
       "content": "1818181818181818181818",
       "createdAt": 1722350291368,
       "id": 17
+    },
+    {
+      "title": "createPost 테스트",
+      "content": "createPost 테스트",
+      "createdAt": 1722515842635,
+      "id": 18
+    },
+    {
+      "title": "ㅁㄴㅇㅁㅊㅈ",
+      "content": "ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ",
+      "createdAt": 1722517469910,
+      "id": 20
     }
   ]
 }

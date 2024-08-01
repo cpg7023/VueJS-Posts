@@ -39,12 +39,10 @@ import { createPost } from '@/api/posts';
 import PostForm from '@/components/posts/PostForm.vue';
 import { useAlert } from '@/composables/alerts';
 import AppError from '@/components/app/AppError.vue';
+import { useAxios } from '@/hooks/useAxios';
 
 // 컴포저블 함수에서 사용할 속성들 가져오기
 const { vAlert, vSuccess } = useAlert();
-
-const loading = ref(false);
-const error = ref(null);
 
 const router = useRouter();
 const form = ref({
@@ -52,23 +50,47 @@ const form = ref({
 	content: null,
 });
 
+//등록 함수가 호출되었을때 axios를 수행해야 하기 때문에 이곳에서 axiios 호출
+const { error, loading, execute } = useAxios(
+	'/posts',
+	{
+		// config 객체
+		method: 'post',
+	},
+	{
+		immediate: false,
+		// 콜백(options) 함수 객체
+		onSuccess: () => {
+			router.push({ name: 'PostList' });
+			vSuccess('등록이 완료되었습니다.');
+		},
+		onError: err => {
+			vAlert(err.message);
+		},
+	},
+);
+
 // 게시글 생성 데이터를 API를 통해 날린다
 const save = async () => {
-	try {
-		loading.value = true;
-		await createPost({
-			...form.value,
-			createdAt: Date.now(),
-		});
-		vSuccess('등록이 완료되었습니다.');
-		router.push({ name: 'PostList' });
-	} catch (err) {
-		error.value = err;
-		vAlert(err.message);
-	} finally {
-		loading.value = false;
-	}
+	execute({ ...form.value, createdAt: Date.now() });
 };
+
+// const save = async () => {
+// 	try {
+// 		loading.value = true;
+// 		await createPost({
+// 			...form.value,
+// 			createdAt: Date.now(),
+// 		});
+// 		vSuccess('등록이 완료되었습니다.');
+// 		router.push({ name: 'PostList' });
+// 	} catch (err) {
+// 		error.value = err;
+// 		vAlert(err.message);
+// 	} finally {
+// 		loading.value = false;
+// 	}
+// };
 
 const goListPage = () => router.push({ name: 'PostList' });
 const visibleForm = ref(false);
