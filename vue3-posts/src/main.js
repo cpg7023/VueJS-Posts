@@ -11,6 +11,7 @@ import globalComponents from '@/plugins/global-components';
 // import focus from '@/directives/focus';
 import globalDirectives from '@/plugins/global-directives';
 import dayjs from '@/plugins/dayjs';
+import { createPinia } from 'pinia';
 
 //라우터를 설치한것 처럼 플러그인도 app.use를 사용해서 설치하여 사용
 //app.use(person, { name: '홍길동' });
@@ -22,6 +23,7 @@ app.use(dayjs);
 app.use(globalDirectives);
 app.use(globalComponents);
 app.use(router);
+app.use(createPinia());
 app.mount('#app');
 import 'bootstrap/dist/js/bootstrap.js';
 

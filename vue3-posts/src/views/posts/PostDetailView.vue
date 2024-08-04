@@ -5,6 +5,7 @@
 
 	<div v-else>
 		<h2>{{ post.title }}</h2>
+		<p>id: {{ props.id }}, isOdd: {{ isOdd }}</p>
 		<p>{{ post.content }}</p>
 		<p class="text-muted">
 			{{ $dayjs(post.createdAt).format('YYYY-MM-DD- HH:mm:ss') }}
@@ -48,18 +49,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { computed, ref, toRef } from 'vue';
 import { useRouter } from 'vue-router';
 import { getPostById, deletePost } from '@/api/posts';
 import { useAlert } from '@/composables/alerts';
 import { useAxios } from '@/hooks/useAxios';
-
-// 컴포저블 함수에서 사용할 속성들 가져오기
-const { vAlert, vSuccess } = useAlert();
+import { useNumber } from '@/composables/number';
 
 const props = defineProps({
 	id: [Number, String],
 });
+
+const idRef = toRef(props, 'id');
+// 컴포저블 함수에서 사용할 속성들 가져오기
+const { vAlert, vSuccess } = useAlert();
+const { isOdd } = useNumber(idRef);
 
 const router = useRouter();
 // const route = useRoute();
@@ -87,7 +91,8 @@ const router = useRouter();
 // const removeError = ref(null);
 // const removeLoading = ref(false);
 // 조회용
-const { error, loading, data: post } = useAxios(`/posts/${props.id}`);
+const url = computed(() => `/posts/${props.id}`);
+const { error, loading, data: post } = useAxios(url);
 // 삭제용
 const {
 	error: removeError,

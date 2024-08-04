@@ -32,7 +32,7 @@ export const useAxios = (url, config = {}, options = {}) => {
 		error.value = null;
 		loading.value = true;
 
-		axios(url, {
+		axios(unref(url), {
 			...defaultConfig,
 			...config,
 			// ref 객체이기 때문에 params 객체의 반응형 매핑을 풀어야 페이지네이션 동작
@@ -61,7 +61,7 @@ export const useAxios = (url, config = {}, options = {}) => {
 
 	// 아래 반응형 데이터들은 나중에 변경시 자동으로 감지하여 반영이 되기 떄문에
 	// async await을 넣을 필요가 없다
-	if (isRef(params)) {
+	if (isRef(params) || isRef(url)) {
 		watchEffect(execute);
 	} else {
 		if (immediate) {
