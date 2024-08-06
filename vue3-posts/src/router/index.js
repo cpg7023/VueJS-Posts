@@ -10,6 +10,7 @@ import NestedView from '@/views/nested/NestedView.vue';
 import NestedOneView from '@/views/nested/NestedOneView.vue';
 import NestedTwoView from '@/views/nested/NestedTwoView.vue';
 import NestedHomeView from '@/views/nested/NestedHomeView.vue';
+import MyPage from '@/views/MyPage.vue';
 
 const routes = [
 	{
@@ -74,12 +75,54 @@ const routes = [
 			},
 		],
 	},
+	{
+		path: '/my',
+		name: 'MyPage',
+		component: MyPage,
+		// 아래 같이 메서드 배열로 정의하면 해쉬 제거 등 기능 추가 가능
+		beforeEnter: [removeQueryString],
+		// beforeEnter: (to, from) => {
+		// 	// to는 이동할 페이지
+		// 	console.log('to : ', to);
+		// 	// from은 이동하기 전 페이지
+		// 	console.log('from :', from);
+
+		// 	/* url에 쿼리스트링을 제거하고 싶을 때 */
+		// 	console.log(to.query);
+		// 	// 아래와 같이 Object key 메서드로 query객체 안의 키를 배열로 반환
+		// 	if (Object.keys(to.query).length > 0) {
+		// 		// 쿼리가 있다면 리다이렉션을 통해 쿼리를 없애고 현재 페이지로 다시 이동
+		// 		return { path: to.path, query: {} };
+		// 	}
+		// },
+	},
 ];
+
+function removeQueryString(to) {
+	// 아래와 같이 Object key 메서드로 query객체 안의 키를 배열로 반환
+	if (Object.keys(to.query).length > 0) {
+		// 쿼리가 있다면 리다이렉션을 통해 쿼리를 없애고 현재 페이지로 다시 이동
+		return { path: to.path, query: {} };
+	}
+}
 
 const router = createRouter({
 	history: createWebHistory('/'),
 	// history: createWebHashHistory(),
 	routes,
 });
+
+// router.beforeEach((to, from) => {
+// 	// to는 이동할 페이지
+// 	console.log('to : ', to);
+// 	// from은 이동하기 전 페이지
+// 	console.log('from :', from);
+
+// 	if (to.name === 'MyPage') {
+// 		// 다른 페이지로 리다이렉션
+// 		// return false;
+// 		return { name: 'Home' };
+// 	}
+// });
 
 export default router;

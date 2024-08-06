@@ -1,8 +1,8 @@
 {
   "posts": [
     {
-      "title": "제목777777777",
-      "content": "내용7777777777",
+      "title": "제d",
+      "content": "내d",
       "createdAt": 1721377103160,
       "id": 7
     },
@@ -13,22 +13,10 @@
       "createdAt": 1721917303547
     },
     {
-      "title": "fdfdffff",
-      "content": "fsssgsdg",
+      "title": "123456",
+      "content": "123456",
       "createdAt": 1721372409609,
       "id": 10
-    },
-    {
-      "title": "ㅇㄹㅇㄹㅇㄹㅇㄹㅇ",
-      "content": "ㅇㄶㅅㅇ",
-      "createdAt": 1721613891515,
-      "id": 12
-    },
-    {
-      "title": "ㅁㄴㅇㅁㄴㅇ",
-      "content": "ㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊㅊ",
-      "createdAt": 1721615049269,
-      "id": 13
     },
     {
       "title": null,
@@ -37,34 +25,16 @@
       "id": 14
     },
     {
-      "title": "cc는 하면안댜",
-      "content": "cc는 하면안댜 파국이야",
-      "createdAt": 1722264379570,
-      "id": 15
-    },
-    {
-      "title": "게시글 225",
-      "content": "게시글 225",
-      "createdAt": 1722264877251,
-      "id": 16
-    },
-    {
-      "title": "181818818",
-      "content": "1818181818181818181818",
-      "createdAt": 1722350291368,
-      "id": 17
-    },
-    {
-      "title": "createPost 테스트",
-      "content": "createPost 테스트",
-      "createdAt": 1722515842635,
-      "id": 18
-    },
-    {
-      "title": "ㅁㄴㅇㅁㅊㅈ",
-      "content": "ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌ",
+      "title": "ㅁㄴㅇㅁㅊㅈasdvsfvbdfvsssssssssss",
+      "content": "ㅌㅌㅌㅌㅌㅌㅌㅌㅌㅌsdasdasdssssssssssss",
       "createdAt": 1722517469910,
       "id": 20
+    },
+    {
+      "title": "qwer",
+      "content": "qwer",
+      "createdAt": 1722957162071,
+      "id": 21
     }
   ]
 }

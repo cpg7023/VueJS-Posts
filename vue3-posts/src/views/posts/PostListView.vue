@@ -4,13 +4,18 @@
 		<hr class="my-4" />
 		<PostFilter
 			v-model:title="params.title_like"
-			v-model:limit="params._limit"
+			:limit="params._limit"
+			@update:limit="changeLimit"
 		></PostFilter>
 
 		<hr class="my-4" />
 		<AppLoading v-if="loading" />
 
 		<AppError v-else-if="error" :message="error.message" />
+
+		<template v-else-if="!isExist">
+			<p class="text-center py-5 text-muted">No Result</p>
+		</template>
 
 		<template v-else>
 			<AppGrid :items="posts">
@@ -74,10 +79,15 @@ const router = useRouter();
 const params = ref({
 	_sort: 'createdAt',
 	_order: 'desc',
-	_limit: 3,
+	_limit: 6,
 	_page: 1,
 	title_like: '',
 });
+
+const changeLimit = value => {
+	params.value._limit = value;
+	params.value._page = 1;
+};
 
 // Axios 컴포저블 함수 사용
 const {
@@ -86,6 +96,9 @@ const {
 	error,
 	loading,
 } = useAxios('/posts', { method: 'get', params });
+
+// 데이터 있는지 확인하는 컴퓨티드
+const isExist = computed(() => posts.value && posts.value.length > 0);
 
 // 아래는 pagination 관련
 const totalCount = computed(() => response.value.headers['x-total-count']);
